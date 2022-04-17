@@ -1,33 +1,79 @@
-public abstract class Prenda {
-    var TipoPrenda
+public class Prenda {
+    var unTipoDePrenda
+    var listaDeTiposPermitidos
+    string categoria
     var material
     var colorPrincipal
-    var colorSecundario
+    var colorSecundario = "N/A"
     
-    Prenda(var unTipoDePrenda, var material, var colorPrincipal, var colorSecundario) {
-        if(esValida(unTipoDePrenda)) {
+    public Prenda(var unTipoDePrenda, var material, var colorPrincipal, var colorSecundario) {
+        if(this.esValida(unTipoDePrenda,categoria) /*categoria.esValida(tipoPrenda)*/ ) {
             //inicializo atributos
+        } 
+        else {
+        throw RuntimeException("El tipo de prenda no es valido con la categoria");
+        }
+    }
+    
+    boolean esValida(unTipoDePrenda, categoria) {
+        switch(categoria){                      
+          case (categoria.isEqual("ParteSuperior"))
+            return listaPS.incluye(unTipoDePrenda);
+
+          case (categoria.isEqual("ParteInferior"))
+            return listaPI.incluye(unTipoDePrenda);
+
+    
+          case (categoria.isEqual("Calzado"))
+            return listaCalz.incluye(unTipoDePrenda);
+
+          
+          case (categoria.isEqual("Accesorio"))
+            return listaAc.incluye(unTipoDePrenda);
+
+          default: lanzarError("Categoria invalida");
+        }
+    }
+}
+
+
+
+// SOLUCION ALTERNATIVA USANDO COMPOSICION CON CLASES SIN UTILIZAR SWITCH
+
+class prenda{
+    var unTipoDePrenda = "zapatos"  // Ejemplo
+    var categoria = new Inferior(listaPrendas = {"zapatos"})
+    method verificar(){
+        if(categoria.incluyeA(unTipoDePrenda)){
+            // Es una prenda valida
+        }
+    
+}
+
+Class abstract categoria{
+    var listaPrendas
+    method incluyeA(tipoPrenda){
+        listaPrendas.contains(tipoPrenda)
+        }
     }
 
-    method validacionDePrenda(){ // se va a implementar en las subclases
-      
-    }
-}
-const calzadosValidos;
+//listaPrendas.incluye(unTipoDePrenda)
 
-class PrendaParteSuperior extends Prenda {
-
-  
-
-}
-class PrendaParteInferior extends Prenda {
+Superior extends Categoria
+{
+    var listaPrendas = {}
 
 }
 
-class PrendaAccesorios extends Prenda {
+Inferior extends Categoria{
+    var listaPrendas = {"zapatillas"}
 
 }
 
-class PrendaCalzado extends Prenda {
+Accesorio extends Categoria{
+    var listaPrendas = {}
+}
 
+Calzado extends Categoria{
+    var listaPrendas = {}
 }
